@@ -1,0 +1,1 @@
+include ':app', ':detail', ':navigation', ':info', ':list'
