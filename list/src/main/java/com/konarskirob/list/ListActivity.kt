@@ -6,26 +6,21 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.konarskirob.navigation.DetailHandle
-import com.konarskirob.navigation.InfoHandle
+import com.konarskirob.navigation.Navigation
 import kotlinx.android.synthetic.main.activity_list.*
 
-internal class ListActivity : AppCompatActivity() {
+class ListActivity : AppCompatActivity() {
 
-    private val detailHandle: DetailHandle by lazy {
-        DetailHandle(this)
-    }
+    private val infoFragment: Fragment? by lazy {
+        Navigation.Info.fragment { result ->
+            infoFragment?.let {
+                supportFragmentManager.beginTransaction()
+                    .remove(it)
+                    .commit()
 
-    private val infoHandle: InfoHandle by lazy {
-        InfoHandle {
-            supportFragmentManager.beginTransaction()
-                .remove(infoFragment)
-                .commit()
+                Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
+            }
         }
-    }
-
-    private val infoFragment: Fragment by lazy {
-        infoHandle.getFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,20 +28,22 @@ internal class ListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_list)
 
         list.setOnClickListener {
-            startActivityForResult(detailHandle.getIntent(DetailHandle.Input("fake_id")), DetailRequestCode)
+            startActivityForResult(Navigation.Detail.activity(this, "fake_id"), DetailRequestCode)
         }
 
         infoButton.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.infoFrame, infoFragment)
-                .commit()
+            infoFragment?.let {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.infoFrame, it)
+                    .commit()
+            }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == DetailRequestCode) {
-            detailHandle.getResult(resultCode, data)?.let { result ->
-                Toast.makeText(this, "Result: ${result.status}", Toast.LENGTH_LONG).show()
+            Navigation.Detail.result(resultCode, data)?.let { result ->
+                Toast.makeText(this, "Result: $result", Toast.LENGTH_LONG).show()
             }
         }
     }

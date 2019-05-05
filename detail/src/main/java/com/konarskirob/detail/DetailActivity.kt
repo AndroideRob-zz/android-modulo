@@ -1,15 +1,14 @@
 package com.konarskirob.detail
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import com.konarskirob.navigation.Navigation
 import kotlinx.android.synthetic.main.activity_detail.*
 
 internal class DetailActivity : Activity() {
 
     private val id: String by lazy {
-        intent.getStringExtra(ExtraId) ?: throw Exception()
+        intent.getStringExtra(Navigation.Detail.ExtraId) ?: throw Exception()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,28 +17,13 @@ internal class DetailActivity : Activity() {
 
         idText.text = id
 
-        accept.setOnClickListener {
-            setResult(ResultCode, intent.apply { putExtra(ExtraResult, true) })
-            finish()
-        }
+        accept.setOnClickListener { complete(true) }
 
-        deny.setOnClickListener {
-            setResult(ResultCode, intent.apply { putExtra(ExtraResult, false) })
-            finish()
-        }
+        deny.setOnClickListener { complete(false) }
     }
 
-    companion object {
-
-        internal const val ResultCode = 1
-        internal const val ExtraResult = "result"
-
-        private const val ExtraId = "id"
-
-        fun newIntent(context: Context, id: String): Intent {
-            return Intent(context, DetailActivity::class.java).apply {
-                putExtra(ExtraId, id)
-            }
-        }
+    private fun complete(result: Boolean) {
+        setResult(Navigation.Detail.ResultCode, intent.apply { putExtra(Navigation.Detail.ExtraResult, result) })
+        finish()
     }
 }
