@@ -29,7 +29,7 @@ dependencies {
     implementation project(":features:info")
     implementation project(":features:detail")
 
-    //implementation project(":libraries:navigation")
+    implementation project(":libraries:navigation")
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
