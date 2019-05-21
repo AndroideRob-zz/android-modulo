@@ -5,28 +5,31 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
     defaultConfig {
         applicationId "com.konarskirob.modulo"
-        minSdkVersion 21
-        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+        }
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    implementation project(":list")
-    implementation project(":info")
-    implementation project(":detail")
-    implementation project(":navigation")
+    implementation project(":core")
+
+    implementation project(":features:list")
+    implementation project(":features:info")
+    implementation project(":features:detail")
+
+    //implementation project(":libraries:navigation")
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
