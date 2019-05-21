@@ -1,1 +1,13 @@
-include ':app', ':detail', ':navigation', ':info', ':list', ':core'
+/** App */
+include ':app'
+
+/** Features */
+include ':features:detail'
+include ':features:info'
+include ':features:list'
+
+/** Libraries */
+include ':libraries:navigation'
+
+/** Core */
+include ':core'

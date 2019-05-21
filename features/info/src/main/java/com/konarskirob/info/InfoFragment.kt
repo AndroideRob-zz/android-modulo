@@ -12,13 +12,13 @@ class InfoFragment : CallbackFragment<Unit, String>() {
 
     override var input: Unit? = null
 
-    override lateinit var callback: ((String) -> Unit)
+    override var callback: ((String) -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_info, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        close.setOnClickListener { callback("My result") }
+        close.setOnClickListener { callback?.invoke("My result") }
     }
 }
