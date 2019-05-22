@@ -8,15 +8,15 @@ import kotlinx.android.synthetic.main.activity_detail.*
 
 internal class DetailActivity : Activity() {
 
-    private val id: String by lazy {
-        intent.getStringExtra(Nav.Detail.ExtraId)
+    private val input: Nav.Detail.Input? by lazy {
+        Nav.Detail.input(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        idText.text = id
+        idText.text = input?.id
 
         accept.setOnClickListener { complete(true) }
 
@@ -24,7 +24,7 @@ internal class DetailActivity : Activity() {
     }
 
     private fun complete(result: Boolean) {
-        setResult(Nav.Detail.ResultCode, intent.apply { putExtra(Nav.Detail.ExtraResult, result) })
+        setResult(1, Nav.Detail.output(intent, Nav.Detail.Output(result)))
         finish()
     }
 }

@@ -39,6 +39,10 @@ subprojects {
                     targetCompatibility Config.javaVersion
                 }
             }
+
+            androidExtensions {
+                experimental = true
+            }
         }
     }
 }

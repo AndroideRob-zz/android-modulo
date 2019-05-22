@@ -13,7 +13,7 @@ class SplashActivity : Activity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
-            startActivity(Nav.List.activity(this))
+            startActivity(Nav.List.intent(this))
             finish()
         }, 1000)
     }

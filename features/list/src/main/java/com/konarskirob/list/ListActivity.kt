@@ -11,15 +11,15 @@ import kotlinx.android.synthetic.main.activity_list.*
 
 class ListActivity : AppCompatActivity(), Nav.Info.Callback {
 
-    private val infoFragment: NavigationFragment<Nav.Info.Input, Nav.Info.Callback>? by lazy {
-        val cache = supportFragmentManager.findFragmentByTag("tag") as? NavigationFragment<Nav.Info.Input, Nav.Info.Callback>
-        val fragment = cache ?: Nav.Info.fragment()
+    private val infoFragment: NavigationFragment<Nav.Info.Input, Nav.Info.Callback>?
+        get() {
+            val cache = supportFragmentManager.findFragmentByTag("tag") as? NavigationFragment<Nav.Info.Input, Nav.Info.Callback>
+            val fragment = cache ?: Nav.Info.fragment()
 
-        fragment?.apply {
-            this.input = Nav.Info.Input("MyFavId")
-            this.callback = this@ListActivity
+            return fragment?.apply {
+                this.callback = this@ListActivity
+            }
         }
-    }
 
     override fun onClose() {
         infoFragment?.let {
@@ -37,12 +37,14 @@ class ListActivity : AppCompatActivity(), Nav.Info.Callback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
 
+
         list.setOnClickListener {
-            startActivityForResult(Nav.Detail.intent(this, "fake_id"), DetailRequestCode)
+            startActivityForResult(Nav.Detail.intent(this, Nav.Detail.Input("fake_id")), DetailRequestCode)
         }
 
         infoButton.setOnClickListener {
             infoFragment?.let {
+                it.input = Nav.Info.Input("MyFavID")
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.infoFrame, it, "tag")
                     .commit()

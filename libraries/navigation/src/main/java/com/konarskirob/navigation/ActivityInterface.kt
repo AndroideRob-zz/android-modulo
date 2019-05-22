@@ -14,9 +14,13 @@ internal interface ActivityInterface<Input : Parcelable, Output : Parcelable> {
         val clazz = Internal.loadClass<Activity>(className)
 
         return Intent(context, clazz).apply {
-            putExtra("input", input)
+            input?.let { putExtra("input", it) }
         }
     }
 
-    fun Activity.input() = intent.getParcelableExtra("input") as Input
+    fun result(resultCode: Int, intent: Intent?): Output? = intent?.let { intent.getParcelableExtra("output") as? Output }
+
+    fun input(activity: Activity): Input? = activity.intent.getParcelableExtra("input") as? Input
+
+    fun output(intent: Intent, output: Output): Intent = intent.putExtra("output", output)
 }
