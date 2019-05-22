@@ -5,6 +5,11 @@
               android:layout_height="match_parent"
               android:background="#456">
 
+    <Button android:id="@+id/action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Perform Action"/>
+
     <Button android:id="@+id/close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

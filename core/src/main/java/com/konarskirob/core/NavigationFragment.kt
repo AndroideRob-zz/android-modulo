@@ -2,11 +2,11 @@ package com.konarskirob.core
 
 import androidx.fragment.app.Fragment
 
-abstract class CallbackFragment<I, T> : Fragment() {
+abstract class NavigationFragment<Input, Callback> : Fragment() {
 
-    abstract var input: I?
+    var input: Input? = null
 
-    abstract var callback: ((T) -> Unit)?
+    var callback: Callback? = null
 
     /**
      * Resets references to avoid potential memory leaks.

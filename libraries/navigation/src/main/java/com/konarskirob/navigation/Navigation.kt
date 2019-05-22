@@ -3,8 +3,7 @@ package com.konarskirob.navigation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.fragment.app.Fragment
-import com.konarskirob.core.CallbackFragment
+import com.konarskirob.core.NavigationFragment
 
 private const val InfoFragment = "com.konarskirob.info.InfoFragment"
 private const val ListActivity = "com.konarskirob.list.ListActivity"
@@ -26,11 +25,12 @@ object Navigation {
 
     object Info {
 
-        fun fragment(onClose: (String) -> Unit): Fragment? {
-            val clazz = loadClass<CallbackFragment<Unit, String>>(InfoFragment)
+        fun fragment(input: InfoInput? = null, callback: InfoCallback? = null): NavigationFragment<InfoInput, InfoCallback>? {
+            val clazz = loadClass<NavigationFragment<InfoInput, InfoCallback>>(InfoFragment)
 
             return clazz?.newInstance()?.apply {
-                callback = onClose
+                this.input = input
+                this.callback = callback
             }
         }
     }
@@ -72,4 +72,13 @@ object Navigation {
             }
         }
     }
+}
+
+data class InfoInput(val id: String)
+
+interface InfoCallback {
+
+    fun onClose()
+
+    fun onAction()
 }
