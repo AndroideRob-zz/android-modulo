@@ -3,31 +3,19 @@ package com.konarskirob.navigation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.konarskirob.core.NavigationFragment
 
 
 sealed class Nav {
 
-    object Info {
+    object Info : FragmentInterface<Info.Input, Info.Callback> {
 
-        private const val InfoFragment = "com.konarskirob.info.InfoFragment"
+        override val className = "com.konarskirob.info.InfoFragment"
 
         data class Input(val id: String)
 
         interface Callback {
-
             fun onClose()
-
             fun onAction()
-        }
-
-        fun fragment(input: Input? = null, callback: Callback? = null): NavigationFragment<Input, Callback>? {
-            val clazz = Internal.loadClass<NavigationFragment<Input, Callback>>(InfoFragment)
-
-            return clazz?.newInstance()?.apply {
-                this.input = input
-                this.callback = callback
-            }
         }
     }
 
