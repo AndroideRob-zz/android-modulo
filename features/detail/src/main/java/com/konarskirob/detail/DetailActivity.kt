@@ -2,13 +2,14 @@ package com.konarskirob.detail
 
 import android.app.Activity
 import android.os.Bundle
-import com.konarskirob.navigation.Navigation
+import com.konarskirob.navigation.Nav
 import kotlinx.android.synthetic.main.activity_detail.*
+
 
 internal class DetailActivity : Activity() {
 
     private val id: String by lazy {
-        intent.getStringExtra(Navigation.Detail.ExtraId) ?: throw Exception()
+        intent.getStringExtra(Nav.Detail.ExtraId)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +24,7 @@ internal class DetailActivity : Activity() {
     }
 
     private fun complete(result: Boolean) {
-        setResult(Navigation.Detail.ResultCode, intent.apply { putExtra(Navigation.Detail.ExtraResult, result) })
+        setResult(Nav.Detail.ResultCode, intent.apply { putExtra(Nav.Detail.ExtraResult, result) })
         finish()
     }
 }

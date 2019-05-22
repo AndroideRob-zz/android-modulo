@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
 import com.konarskirob.modulo.R
-import com.konarskirob.navigation.Navigation
+import com.konarskirob.navigation.Nav
 
 class SplashActivity : Activity() {
 
@@ -13,7 +13,7 @@ class SplashActivity : Activity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
-            startActivity(Navigation.List.activity(this))
+            startActivity(Nav.List.activity(this))
             finish()
         }, 1000)
     }

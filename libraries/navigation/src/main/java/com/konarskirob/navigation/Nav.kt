@@ -5,28 +5,24 @@ import android.content.Context
 import android.content.Intent
 import com.konarskirob.core.NavigationFragment
 
-private const val InfoFragment = "com.konarskirob.info.InfoFragment"
-private const val ListActivity = "com.konarskirob.list.ListActivity"
-private const val DetailActivity = "com.konarskirob.detail.DetailActivity"
 
-object Navigation {
-
-    private val cache = mutableMapOf<String, Class<*>>()
-
-    private fun <T> loadClass(className: String): Class<T>? {
-        return cache.getOrPut(className) {
-            try {
-                Class.forName(className)
-            } catch (e: ClassNotFoundException) {
-                return null
-            }
-        } as? Class<T>
-    }
+sealed class Nav {
 
     object Info {
 
-        fun fragment(input: InfoInput? = null, callback: InfoCallback? = null): NavigationFragment<InfoInput, InfoCallback>? {
-            val clazz = loadClass<NavigationFragment<InfoInput, InfoCallback>>(InfoFragment)
+        private const val InfoFragment = "com.konarskirob.info.InfoFragment"
+
+        data class Input(val id: String)
+
+        interface Callback {
+
+            fun onClose()
+
+            fun onAction()
+        }
+
+        fun fragment(input: Input? = null, callback: Callback? = null): NavigationFragment<Input, Callback>? {
+            val clazz = Internal.loadClass<NavigationFragment<Input, Callback>>(InfoFragment)
 
             return clazz?.newInstance()?.apply {
                 this.input = input
@@ -37,21 +33,25 @@ object Navigation {
 
     object List {
 
+        private const val ListActivity = "com.konarskirob.list.ListActivity"
+
         fun activity(context: Context): Intent? {
-            val clazz = loadClass<Activity>(ListActivity)
+            val clazz = Internal.loadClass<Activity>(ListActivity)
             return clazz?.let { Intent(context, it) }
         }
     }
 
     object Detail {
 
+        private const val DetailActivity = "com.konarskirob.detail.DetailActivity"
+
         const val ResultCode = 1
         const val ExtraResult = "result"
 
         const val ExtraId = "id"
 
-        fun activity(context: Context, id: String): Intent? {
-            val clazz = loadClass<Activity>(DetailActivity)
+        fun intent(context: Context, id: String): Intent? {
+            val clazz = Internal.loadClass<Activity>(DetailActivity)
 
             return clazz?.let {
                 Intent(context, it).apply {
@@ -72,13 +72,4 @@ object Navigation {
             }
         }
     }
-}
-
-data class InfoInput(val id: String)
-
-interface InfoCallback {
-
-    fun onClose()
-
-    fun onAction()
 }

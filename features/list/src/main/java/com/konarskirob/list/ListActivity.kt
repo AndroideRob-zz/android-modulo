@@ -6,16 +6,16 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.konarskirob.core.NavigationFragment
-import com.konarskirob.navigation.InfoCallback
-import com.konarskirob.navigation.InfoInput
-import com.konarskirob.navigation.Navigation
+import com.konarskirob.core.extensions.isLazyInitialized
+import com.konarskirob.navigation.Nav
 import kotlinx.android.synthetic.main.activity_list.*
 
-class ListActivity : AppCompatActivity(), InfoCallback {
 
-    private val infoFragment: NavigationFragment<InfoInput, InfoCallback>? by lazy {
-        val cache = supportFragmentManager.findFragmentByTag("tag") as? NavigationFragment<InfoInput, InfoCallback>
-        cache ?: Navigation.Info.fragment()
+class ListActivity : AppCompatActivity(), Nav.Info.Callback {
+
+    private val infoFragment: NavigationFragment<Nav.Info.Input, Nav.Info.Callback>? by lazy {
+        val cache = supportFragmentManager.findFragmentByTag("tag") as? NavigationFragment<Nav.Info.Input, Nav.Info.Callback>
+        cache ?: Nav.Info.fragment()
     }
 
     override fun onClose() {
@@ -35,12 +35,14 @@ class ListActivity : AppCompatActivity(), InfoCallback {
         setContentView(R.layout.activity_list)
 
         infoFragment?.apply {
-            input = InfoInput("MyFavId")
+            input = Nav.Info.Input("MyFavId")
             callback = this@ListActivity
         }
 
+        Nav.Info.fragment()
+
         list.setOnClickListener {
-            startActivityForResult(Navigation.Detail.activity(this, "fake_id"), DetailRequestCode)
+            startActivityForResult(Nav.Detail.intent(this, "fake_id"), DetailRequestCode)
         }
 
         infoButton.setOnClickListener {
@@ -54,7 +56,7 @@ class ListActivity : AppCompatActivity(), InfoCallback {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == DetailRequestCode) {
-            Navigation.Detail.result(resultCode, data)?.let { result ->
+            Nav.Detail.result(resultCode, data)?.let { result ->
                 Toast.makeText(this, "Result: $result", Toast.LENGTH_LONG).show()
             }
         }
@@ -62,7 +64,10 @@ class ListActivity : AppCompatActivity(), InfoCallback {
 
     override fun onDestroy() {
         super.onDestroy()
-        infoFragment?.clear()
+
+        if (::infoFragment.isLazyInitialized) {
+            infoFragment?.clear()
+        }
     }
 
     companion object {
