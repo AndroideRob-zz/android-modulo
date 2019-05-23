@@ -11,15 +11,10 @@ import kotlinx.android.synthetic.main.activity_list.*
 
 class ListActivity : AppCompatActivity(), Nav.Info.Callback {
 
-    private val infoFragment: NavigationFragment<Nav.Info.Input, Nav.Info.Callback>?
-        get() {
-            val cache = supportFragmentManager.findFragmentByTag("tag") as? NavigationFragment<Nav.Info.Input, Nav.Info.Callback>
-            val fragment = cache ?: Nav.Info.fragment()
-
-            return fragment?.apply {
-                this.callback = this@ListActivity
-            }
-        }
+    private val infoFragment: NavigationFragment<Nav.Info.Input, Nav.Info.Callback>? by lazy {
+        val cache = supportFragmentManager.findFragmentByTag("tag") as? NavigationFragment<Nav.Info.Input, Nav.Info.Callback>
+        cache ?: Nav.Info.fragment()
+    }
 
     override fun onClose() {
         infoFragment?.let {
@@ -37,6 +32,7 @@ class ListActivity : AppCompatActivity(), Nav.Info.Callback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
 
+        infoFragment?.callback = this
 
         list.setOnClickListener {
             startActivityForResult(Nav.Detail.intent(this, Nav.Detail.Input("fake_id")), DetailRequestCode)
