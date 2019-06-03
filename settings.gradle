@@ -8,6 +8,7 @@ include ':features:list'
 
 /** Libraries */
 include ':libraries:navigation'
+include ':libraries:data'
 
 /** Core */
 include ':core'

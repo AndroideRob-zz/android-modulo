@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android'
 dependencies {
     implementation project(":core")
     implementation project(":libraries:navigation")
+    implementation project(":libraries:data")
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
