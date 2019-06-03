@@ -2,7 +2,7 @@ package com.konarskirob.di
 
 import android.app.Application
 import android.content.Context
-import com.konarskirob.data.ArticleRepo
+import com.konarskirob.data.article.ArticleRepo
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable

@@ -1,6 +1,6 @@
 package com.konarskirob.di
 
-import com.konarskirob.data.ArticleRepo
+import com.konarskirob.data.article.ArticleRepo
 import dagger.Component
 import javax.inject.Singleton
 
