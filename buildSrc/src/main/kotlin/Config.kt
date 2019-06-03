@@ -23,6 +23,7 @@ object Versions {
 
     val gradleandroid = "3.4.1"
     val kotlin = "1.3.21"
+    val dagger = "2.21"
 }
 
 object Deps {
@@ -42,5 +43,9 @@ object Deps {
 
     val tools_gradleandroid = "com.android.tools.build:gradle:${Versions.gradleandroid}"
     val tools_kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+
+    val dagger_compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+    val dagger_processor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
+    val dagger = "com.google.dagger:dagger:${Versions.dagger}"
 }
 

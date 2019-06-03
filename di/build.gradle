@@ -4,18 +4,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 dependencies {
-    implementation project(":core")
-    implementation project(":di")
-
-    implementation project(":libraries:navigation")
     implementation project(":libraries:data")
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     annotationProcessor Deps.dagger_compiler
     implementation Deps.dagger

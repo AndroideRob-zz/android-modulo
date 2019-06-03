@@ -6,6 +6,9 @@ include ':features:detail'
 include ':features:info'
 include ':features:list'
 
+/** Dependency injection */
+include ':di'
+
 /** Libraries */
 include ':libraries:navigation'
 include ':libraries:data'

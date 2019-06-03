@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -24,10 +23,12 @@ android {
 
 dependencies {
     implementation project(":core")
+    implementation project(":di")
 
     implementation project(":features:list")
     implementation project(":features:info")
     implementation project(":features:detail")
+    implementation project(":libraries:data")
 
     implementation project(":libraries:navigation")
 
@@ -35,6 +36,17 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.google.android.material:material:1.0.0'
+
+    annotationProcessor Deps.dagger_compiler
+    implementation Deps.dagger
+
+    kapt Deps.dagger_compiler
+    kapt Deps.dagger_processor
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+    kapt "android.arch.lifecycle:compiler:2.0.0"
+
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-2'
 }
