@@ -21,8 +21,8 @@ class ListActivity : AppCompatActivity() {
     @Inject
     lateinit var router: ListRouter
 
-//    @Inject
-//    lateinit var infoTopic: InfoTopic
+    @Inject
+    lateinit var infoTopic: InfoTopic
 
     private val infoFragment: Fragment? by lazy {
         val cache = supportFragmentManager.findFragmentByTag("tag")
@@ -48,12 +48,12 @@ class ListActivity : AppCompatActivity() {
             }
         }
 
-//        infoTopic.data.listen(this) { message ->
-//            when (message) {
-//                is Action -> onAction(message.data)
-//                is Close -> onClose()
-//            }
-//        }
+        infoTopic.data.listen(this) { message ->
+            when (message) {
+                is Action -> onAction(message.data)
+                is Close -> onClose()
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

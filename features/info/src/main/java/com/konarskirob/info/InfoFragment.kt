@@ -8,8 +8,7 @@ import androidx.fragment.app.Fragment
 import com.konarskirob.data.topics.Action
 import com.konarskirob.data.topics.Close
 import com.konarskirob.data.topics.InfoTopic
-import com.konarskirob.di.baseComponent
-import com.konarskirob.info.di.DaggerInfoComponent
+import com.konarskirob.info.di.infoComponent
 import kotlinx.android.synthetic.main.fragment_info.*
 import javax.inject.Inject
 
@@ -21,7 +20,7 @@ class InfoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerInfoComponent.builder().baseComponent(baseComponent()).build().inject(this)
+        infoComponent().inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

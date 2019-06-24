@@ -6,7 +6,7 @@ import com.konarskirob.data.topics.LocationTopic
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(modules = [BaseModule::class, TopicsModule::class])
+@Component(modules = [BaseModule::class])
 @Singleton
 interface BaseComponent {
 
