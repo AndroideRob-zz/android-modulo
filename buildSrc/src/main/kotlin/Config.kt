@@ -28,12 +28,18 @@ object Versions {
 
 object Deps {
 
+    val androidx_appcompat = "androidx.appcompat:appcompat:1.0.2"
     val androidx_core = "androidx.core:core-ktx:${Versions.androidx_core}"
     val androidx_constraintlayout = "androidx.constraintlayout:constraintlayout:${Versions.androidx_constraintLayout}"
     val androidx_material = "com.google.android.material:material:${Versions.material}"
     val androidx_navigation_fragment = "androidx.navigation:navigation-fragment-ktx:${Versions.androidx_navigation}"
     val androidx_navigation_ui = "androidx.navigation:navigation-ui-ktx:${Versions.androidx_navigation}"
     val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.androidx_recyclerview}"
+
+    val lifecycle_viewmodel = "androidx.lifecycle:lifecycle-viewmodel:2.0.0"
+    val lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata:2.0.0"
+    val lifecycle_extensions = "androidx.lifecycle:lifecycle-extensions:2.0.0"
+    val lifecycle_compiler = "android.arch.lifecycle:compiler:1.1.1"
 
     val testlib_junit = "junit:junit:${Versions.junit}"
 

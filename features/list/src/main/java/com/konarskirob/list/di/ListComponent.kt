@@ -1,13 +1,17 @@
 package com.konarskirob.list.di
 
-import com.konarskirob.di.AppScope
-import com.konarskirob.di.BaseComponent
 import com.konarskirob.list.ListActivity
+import com.konarskirob.list.ListRouter
 import dagger.Component
 
-@Component(dependencies = [BaseComponent::class])
-@AppScope
-interface ListComponent  {
+@Component(dependencies = [ListRouterComponent::class])
+interface ListComponent {
+
+    fun listRouter(): ListRouter
 
     fun inject(activity: ListActivity)
+}
+
+interface ListRouterComponent {
+    fun router(): ListRouter
 }

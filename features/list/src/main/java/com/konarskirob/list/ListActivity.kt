@@ -1,50 +1,40 @@
 package com.konarskirob.list
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.konarskirob.core.NavigationFragment
-import com.konarskirob.data.article.ArticleRepo
-import com.konarskirob.di.baseComponent
-import com.konarskirob.list.di.DaggerListComponent
+import androidx.fragment.app.Fragment
+import com.konarskirob.core.extensions.listen
+import com.konarskirob.data.topics.Action
+import com.konarskirob.data.topics.Close
+import com.konarskirob.data.topics.InfoTopic
+import com.konarskirob.list.di.listComponent
 import com.konarskirob.navigation.Nav
 import kotlinx.android.synthetic.main.activity_list.*
 import javax.inject.Inject
 
 
-class ListActivity : AppCompatActivity(), Nav.Info.Callback {
+class ListActivity : AppCompatActivity() {
 
-    lateinit var articleRepo: ArticleRepo
-        @Inject set
+    @Inject
+    lateinit var router: ListRouter
 
-    private val infoFragment: NavigationFragment<Nav.Info.Input, Nav.Info.Callback>? by lazy {
-        val cache = supportFragmentManager.findFragmentByTag("tag") as? NavigationFragment<Nav.Info.Input, Nav.Info.Callback>
-        cache ?: Nav.Info.fragment()
+//    @Inject
+//    lateinit var infoTopic: InfoTopic
+
+    private val infoFragment: Fragment? by lazy {
+        val cache = supportFragmentManager.findFragmentByTag("tag")
+        cache ?: router.provideInfoFragment()
     }
 
-    override fun onClose() {
-        infoFragment?.let {
-            supportFragmentManager.beginTransaction()
-                .remove(it)
-                .commit()
-        }
-    }
-
-    override fun onAction() {
-        Toast.makeText(this, "onAction", Toast.LENGTH_SHORT).show()
-    }
-
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
 
-        DaggerListComponent.builder().baseComponent(baseComponent()).build().inject(this)
-
-        Log.e("ListArt", articleRepo.article.value?.toString())
-
-        infoFragment?.callback = this
+        listComponent().inject(this)
 
         list.setOnClickListener {
             startActivityForResult(Nav.Detail.intent(this, Nav.Detail.Input("fake_id")), DetailRequestCode)
@@ -52,12 +42,18 @@ class ListActivity : AppCompatActivity(), Nav.Info.Callback {
 
         infoButton.setOnClickListener {
             infoFragment?.let {
-                it.input = Nav.Info.Input("MyFavID")
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.infoFrame, it, "tag")
                     .commit()
             }
         }
+
+//        infoTopic.data.listen(this) { message ->
+//            when (message) {
+//                is Action -> onAction(message.data)
+//                is Close -> onClose()
+//            }
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -66,6 +62,18 @@ class ListActivity : AppCompatActivity(), Nav.Info.Callback {
                 Toast.makeText(this, "Result: $result", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun onClose() {
+        infoFragment?.let {
+            supportFragmentManager.beginTransaction()
+                .remove(it)
+                .commit()
+        }
+    }
+
+    private fun onAction(data: String) {
+        Toast.makeText(this, "onAction: $data", Toast.LENGTH_SHORT).show()
     }
 
     companion object {
