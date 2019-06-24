@@ -37,7 +37,7 @@ class ListActivity : AppCompatActivity() {
         listComponent().inject(this)
 
         list.setOnClickListener {
-            startActivityForResult(Nav.Detail.intent(this, Nav.Detail.Input("fake_id")), DetailRequestCode)
+            router.routeToDetail(this, "fake_id")
         }
 
         infoButton.setOnClickListener {
