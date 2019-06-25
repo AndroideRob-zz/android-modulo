@@ -24,7 +24,7 @@ class ListActivity : AppCompatActivity() {
 
     private val infoFragment: Fragment? by lazy {
         val cache = supportFragmentManager.findFragmentByTag("tag")
-        cache ?: router.provideInfoFragment()
+        cache ?: router.createInfoFragment()
     }
 
     @SuppressLint("CheckResult")
@@ -35,7 +35,7 @@ class ListActivity : AppCompatActivity() {
         listComponent().inject(this)
 
         list.setOnClickListener {
-            router.routeToDetail(this, "fake_id")
+            startActivity(router.createDetailIntent(this, "fake_id"))
         }
 
         infoButton.setOnClickListener {

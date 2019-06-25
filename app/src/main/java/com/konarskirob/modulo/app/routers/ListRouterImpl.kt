@@ -7,10 +7,9 @@ import com.konarskirob.list.ListRouter
 
 class ListRouterImpl : ListRouter {
 
-    override fun provideInfoFragment() = InfoFragment()
+    override fun createInfoFragment() =
+        InfoFragment()
 
-    override fun routeToDetail(context: Context, id: String) {
-        val intent = DetailActivity.newIntent(context, id)
-        context.startActivity(intent)
-    }
+    override fun createDetailIntent(context: Context, id: String) =
+        DetailActivity.newIntent(context, id)
 }

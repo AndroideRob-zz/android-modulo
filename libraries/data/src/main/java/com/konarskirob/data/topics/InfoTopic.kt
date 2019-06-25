@@ -1,6 +1,6 @@
 package com.konarskirob.data.topics
 
-class InfoTopic : RxTopic<InfoMessage>()
+class InfoTopic : RxPublishTopic<InfoMessage>()
 
 sealed class InfoMessage
 class Action(val data: String) : InfoMessage()

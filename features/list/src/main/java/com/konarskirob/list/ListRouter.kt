@@ -1,11 +1,12 @@
 package com.konarskirob.list
 
 import android.content.Context
+import android.content.Intent
 import androidx.fragment.app.Fragment
 
 interface ListRouter {
 
-    fun provideInfoFragment(): Fragment
+    fun createInfoFragment(): Fragment
 
-    fun routeToDetail(context: Context, id: String)
+    fun createDetailIntent(context: Context, id: String): Intent
 }
